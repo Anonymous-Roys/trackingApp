@@ -65,9 +65,15 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ isOn, toggleSwitch }) => {
 
 const InfoButton: React.FC = () => {
   return (
+    <View>
+
     <TouchableOpacity style={styles.infoButton}>
   <Ionicons name="notifications-outline" size={22} color="white" style={{ transform: [{ rotate: '20deg' }] }} />
 </TouchableOpacity>
+<View style={styles.badgeContainer2}>
+          <Text style={styles.badgeText2}>1</Text>
+        </View>
+    </View>
 
   );
 };
@@ -229,6 +235,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     color: 'white',
+  },
+  badgeContainer2: {
+    backgroundColor: 'white',
+    width: 16,
+    height: 16,
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    top: -8,
+    right: -1,
+    zIndex: 1,
+  },
+  badgeText2: {
+    color: '#2196F3',
+    fontSize: 10,
+    fontWeight: 'bold',
   },
 });
 

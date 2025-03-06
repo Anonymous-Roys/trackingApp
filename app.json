@@ -11,8 +11,8 @@
     "ios": {
       "supportsTablet": true,
       "config": {
-    "googleMapsApiKey": "YOUR_API_KEY"
-  }
+        "googleMapsApiKey": "YOUR_API_KEY"
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -20,10 +20,11 @@
         "backgroundColor": "#ffffff"
       },
       "config": {
-    "googleMaps": {
-      "apiKey": "YOUR_API_KEY"
-    }
-  }
+        "googleMaps": {
+          "apiKey": "YOUR_API_KEY"
+        }
+      },
+      "package": "com.davidarhin.trackingApp"
     },
     "web": {
       "bundler": "metro",
@@ -44,6 +45,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "8cdae5af-293e-4dc7-8950-bb95a3b9cc8e"
+      }
     }
   }
 }

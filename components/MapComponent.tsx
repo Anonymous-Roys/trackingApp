@@ -11,6 +11,9 @@ interface MapComponentProps {
   location: Location.LocationObject | null;
   errorMsg: string | null;
 }
+type LocationMarkerProps = {
+  direction?: number;
+};
 
 const MapComponent: React.FC<MapComponentProps> = ({ location, errorMsg }) => {
   return (
@@ -25,16 +28,32 @@ const MapComponent: React.FC<MapComponentProps> = ({ location, errorMsg }) => {
             latitudeDelta: 0.005,
             longitudeDelta: 0.005,
           }}
-          customMapStyle={mapStyle}
+        // customMapStyle={mapStyle}
         >
           <Marker
             coordinate={{
               latitude: location.coords.latitude,
               longitude: location.coords.longitude,
             }}
+            tracksViewChanges={true}
+            title="Your Current Location"
+            description="This is your current location"
           >
-            <LocationMarker />
+            <LocationMarker direction={location.coords.heading || 0} />
           </Marker>
+          <Marker
+            coordinate={{
+              latitude: location.coords.latitude,
+              longitude: location.coords.longitude,
+            }}
+            anchor={{ x: 0.5, y: 0.5 }}
+            zIndex={1}
+            tracksViewChanges={true}
+            flat={true}
+          >
+            <DirectionCone direction={location.coords.heading || 0} />
+          </Marker>
+
         </MapView>
       ) : (
         <View style={styles.loadingContainer}>
@@ -45,15 +64,34 @@ const MapComponent: React.FC<MapComponentProps> = ({ location, errorMsg }) => {
   );
 };
 
-const LocationMarker: React.FC = () => {
+
+const LocationMarker: React.FC<LocationMarkerProps> = ({ direction = 0 }) => {
   return (
-    <View style={styles.markerContainer}>
-      <View style={styles.markerInner}>
-        <FontAwesome5 name="location-arrow" size={16} color="#4a80f5" />
+    <View style={styles.container}>
+      <View style={styles.markerContainer}>
+
+        <View style={styles.markerOuterRing} />
+        <View style={styles.markerRing}>
+          <View style={styles.markerInner}>
+            <FontAwesome5 name="location-arrow" size={16} color="#4a80f5" />
+          </View>
+        </View>
+        {/* </View> */}
       </View>
-      <View style={styles.markerRing} />
-      <View style={styles.markerOuterRing} />
-      <View style={styles.directionCone} />
+    </View>
+  );
+};
+
+
+const DirectionCone: React.FC<{ direction: number }> = ({ direction }) => {
+  return (
+    <View style={styles.coneContainer}>
+      <View
+        style={[
+          styles.directionCone,
+          // { transform: [{ rotate: `${direction}deg` }] }
+        ]}
+      />
     </View>
   );
 };
@@ -68,9 +106,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  container: {
+    // alignItems: 'flex-start',
+    // justifyContent: 'flex-start',
+
+    // width: 200,
+    // height: 200,
+    // borderRadius: 50,
+    width: '800%',
+  },
   markerContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
+
+    // position: 'relative',
+    // elevation: 4,
+    // alignItems: 'flex-start',
+    // justifyContent: 'flex-start',
+
   },
   markerInner: {
     width: 24,
@@ -80,38 +131,51 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 3,
+    elevation: 3,
   },
   markerRing: {
-    position: 'absolute',
-    width: 40,
-    height: 40,
+    width: 30,
+    height: 30,
     borderRadius: 20,
     backgroundColor: 'rgba(74, 128, 245, 0.3)',
     zIndex: 2,
+    elevation: 2,
+    padding: 2,
+    position: 'absolute',
+    top: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   markerOuterRing: {
     position: 'absolute',
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: 'rgba(74, 128, 245, 0.1)',
+    top: 0,
+    left: 10,
+    borderTopRightRadius: 100,
+    borderWidth: 20,
+    borderColor: 'rgba(74, 128, 245, 0.1)',
+
+    // backgroundColor: 'rgba(74, 128, 245, 0.1)',
     zIndex: 1,
+    elevation: 1,
+
+  },
+  coneContainer: {
+    backgroundColor: 'red',
+    overflow: 'visible',
+    borderRadius: 50,
+    // position: 'absolute',
+   
+    transform: [{ rotate: '-90deg' }],
+    // elevation: 4,
   },
   directionCone: {
-    position: 'absolute',
-    width: 0,
-    height: 0,
-    backgroundColor: 'transparent',
     borderStyle: 'solid',
-    borderLeftWidth: 400,
-    borderRightWidth: 300,
-    borderBottomWidth: 250,
-    borderLeftColor: 'rgba(74, 128, 245, 0.1)',
+    borderLeftWidth: 60,
+    borderRightWidth: 100,
+    borderBottomWidth: 600,
+    borderLeftColor: 'transparent',
     borderRightColor: 'transparent',
-    borderBottomColor: 'transparent',
-    transform: [{ rotate: '300deg' }],
-    zIndex: 0,
-    top: -340,
+    borderBottomColor: 'rgba(74, 128, 245, 0.15)',
   },
 });
 

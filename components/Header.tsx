@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'absolute',
     top: -10,
-    left: -9,
+    left: -1,
     zIndex: 1,
   },
   badgeContainer2: {
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'absolute',
     top: -10,
-    right: -9,
+    right: -1,
     zIndex: 1,
   },
   badgeText1: {
