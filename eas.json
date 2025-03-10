@@ -1,9 +1,5 @@
 {
-  "cli": {
-    "version": ">= 15.0.13",
-    "appVersionSource": "remote"
-  },
- "build": {
+  "build": {
     "preview": {
       "android": {
         "buildType": "apk"
